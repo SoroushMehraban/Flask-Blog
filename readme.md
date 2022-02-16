@@ -11,3 +11,6 @@ To enable the debug mode, we have to write the following command:
 `set FLASK_DEBUG=1`
 ### Running the project
 `flask run`
+### Form Validation
+`pip install flask-wtf`   
+`pip install email_validator`

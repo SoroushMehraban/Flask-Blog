@@ -31,3 +31,12 @@ To enable the debug mode, we have to write the following command:
 - `<MODEL>.query.get(<ID>)`
 #### Delete all the tables
 `db.drop_all()`
+### Password encryption
+1. `pip install flask-bcrypt`
+2. `from flask_bcrypt import Bcrypt`
+3. `bcrypt = Bcrypt(<APP>)`
+4. `bcrypt.generate_password_hash('<PASSWORD>').decode('utf-8')`  
+**Note that hash is always different. even on the same password. So how to verify?**   
+   `bcrypt.check_password_hash(<hashed_password>, <password>)`
+### Login
+`pip install flask-login`

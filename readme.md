@@ -64,7 +64,13 @@ To enable the debug mode, we have to write the following command:
 
 ### Login
 
-`pip install flask-login`
+1. `pip install flask-login`
+2. On `__init__.py` file, add `login_manager = LoginManager(app)`
+3. On `models.py`, import `login_manager`.
+4. Now Extension needs to know to find a user by ID. So we create a `def load_user(user_id)` that gets a user from
+   database by ID. Then we add the `@login_manager.user_loader` decorator.
+5. The extension expects our user model to have certain attributes: `is_authenticated`, `is_active`, `is_anonymous`
+   , `get_id()`. Therefore, we can import `UserMixin` from `flask_login` and finally our user model inherits from that.
 
 ### Pagination
 
@@ -75,4 +81,21 @@ To enable the debug mode, we have to write the following command:
 - `posts = Post.query.paginate(page=2)`: get the second page's items.
 - `posts = Post.query.paginate(per_page=5)`: 5 posts per page.
 - `posts.total`: Total number of posts in all pages.
-- `for page_number in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2)`: iterate over page numbers
+- `for page_number in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2)`: iterate over page
+  numbers
+
+### Generate time-sensitive token
+
+1. `from itsdangerous import TimedJSONWebSignatureSerializer as Serializer`
+2. `s = Serializer('secret_key_here', expires_in=30)`  # expires in 30 seconds.
+3. `token = s.dumps({"user_id": 1}).decode('utf-8')`
+4. `s.loads(token)`  # works only within 30 seconds.
+
+### Send emails
+1. 'pip install flask-mail'
+2. On `__init__.py` file, add `app.config['MAIL_SERVER'] = 'smtp.gmail.com'` (or your host's smtp server)
+3. Add `app.config['MAIL_PORT'] = 587`
+4. Add `app.config['MAIL_USE_TLS'] = True`
+5. Add `app.config['MAIL_USERNAME'] = os.environ.get('EMAIL_USER')`
+6. Add `app.config['MAIL_PASSWORD'] = os.environ.get('EMAIL_PASS')`
+7. Add `mail = Mail(app)`

@@ -92,10 +92,11 @@ To enable the debug mode, we have to write the following command:
 4. `s.loads(token)`  # works only within 30 seconds.
 
 ### Send emails
-1. 'pip install flask-mail'
-2. On `__init__.py` file, add `app.config['MAIL_SERVER'] = 'smtp.gmail.com'` (or your host's smtp server)
-3. Add `app.config['MAIL_PORT'] = 587`
-4. Add `app.config['MAIL_USE_TLS'] = True`
-5. Add `app.config['MAIL_USERNAME'] = os.environ.get('EMAIL_USER')`
-6. Add `app.config['MAIL_PASSWORD'] = os.environ.get('EMAIL_PASS')`
-7. Add `mail = Mail(app)`
+1. `pip install flask-mail`.
+2. On `__init__.py` file, add `app.config['MAIL_SERVER'] = 'smtp.gmail.com'` (or your host's smtp server).
+3. Add `app.config['MAIL_PORT'] = 587`.
+4. Add `app.config['MAIL_USE_TLS'] = True`.
+5. Add `app.config['MAIL_USERNAME'] = os.environ.get('EMAIL_USER')`.
+6. Add `app.config['MAIL_PASSWORD'] = os.environ.get('EMAIL_PASS')`.
+7. Add `mail = Mail(app)`.
+8. In your code where you want to send an email, create a `Message(subject=..., sender=..., recipients=..., body=...,)` instance. Then send it using `mail.send(message)`.
